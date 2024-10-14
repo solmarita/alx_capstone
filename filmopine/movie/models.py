@@ -5,7 +5,7 @@ class Movie(models.Model):
     imdb_id = models.CharField(max_length=20, unique=True)
     title = models.CharField(max_length=255, blank=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    created_on = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
