@@ -13,9 +13,9 @@ class Review(models.Model):
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveBigIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
-    review_title = models.CharField(max_length=255)
-    review_content = models.TextField()
-    rating = models.PositiveSmallIntegerField(choices=[(i, i) for i in range(1, 6)])
+    review_title = models.CharField(max_length=255, blank=False, null=False)
+    review_content = models.TextField(blank=False, null=False)
+    rating = models.PositiveSmallIntegerField(choices=[(i, i) for i in range(1, 6)], blank=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
