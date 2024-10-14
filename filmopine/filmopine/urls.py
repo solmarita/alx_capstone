@@ -16,10 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('core.urls')), # Include core app URLs
+    path('', RedirectView.as_view(url='/api/', permanent=False)),  # Redirect root URL to /api/ (permanent: This parameter specifies whether the redirection is permanent (HTTP status 301) or temporary (HTTP status 302). Setting it to False means a temporary redirect.)
     path('api/', include('core.urls')), # Include core app URLs
     path('api/movies/', include('movie.urls')), # Include movies app URLs
     path('api/reviews/', include('review.urls')), # Include reviews app URLs
