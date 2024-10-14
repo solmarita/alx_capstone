@@ -1,0 +1,5 @@
+# Django secret keys
+*.env
+
+# Database files
+*.sqlite3
