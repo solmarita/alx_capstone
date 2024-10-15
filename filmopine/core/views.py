@@ -9,6 +9,6 @@ def api_home(request):
         "author": "Solomon Mokua Marita",
         "github repository": "https://github.com/solmarita/alx_capstone",
         "message": "Welcome to the Film Opine API, a Movie Review and Rating API developed for the ALX Back-End Web Development Capstone Project.",
-        "swagger": "URL-PENING"
+        "swagger": "URL-PENDING"
     }
     return Response(data)
