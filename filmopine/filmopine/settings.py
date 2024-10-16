@@ -145,4 +145,5 @@ AUTH_USER_MODEL = 'core.User'
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,  # Set the max number of items per page to 10
+    'COERCE_DECIMAL_TO_STRING': False, # Disable coercing Decimal fields to strings in API responses.
 }
