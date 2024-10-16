@@ -4,6 +4,7 @@ from django.db.models import Q
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
 from django.contrib.contenttypes.models import ContentType
 from .models import Review
@@ -84,6 +85,27 @@ class ReviewSearchAPIView(APIView):
 
         # Fetch reviews based on the filters
         reviews = Review.objects.filter(filters)
+
+        # Apply pagination
+        paginator = self.pagination_class()
+        paginated_reviews = paginator.paginate_queryset(reviews, request)
+
+        # Serialize the reviews
+        serializer = ReviewSerializer(paginated_reviews, many=True)
+
+        # Return paginated response
+        return paginator.get_paginated_response(serializer.data)
+
+class ReviewMeAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    pagination_class = GenericReviewPagination
+
+    def get(self, request):
+        """Retrieve all reviews submitted by the current user."""
+        user = request.user  # Get the currently authenticated user
+
+        # Fetch reviews created by the current user
+        reviews = Review.objects.filter(user=user)
 
         # Apply pagination
         paginator = self.pagination_class()
