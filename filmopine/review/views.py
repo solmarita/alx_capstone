@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404
-from rest_framework import viewsets
+from django.db.models import Q
+from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
@@ -54,3 +55,42 @@ class ReviewDetailAPIView(APIView):
         serializer = ReviewSerializer(review)
 
         return Response(serializer.data)
+    
+class ReviewSearchAPIView(APIView):
+    pagination_class = GenericReviewPagination
+
+    def get(self, request):
+        """Search for reviews by movie title or rating."""
+        movie_title = request.query_params.get('movie_title')
+        rating = request.query_params.get('rating')
+
+        # Build the query filters
+        filters = Q()
+
+        if movie_title:
+            # Find content types associated with Movie
+            content_type_movie = ContentType.objects.get(app_label='movie', model='movie')
+
+            # Get movie IDs that match the title
+            movies = Movie.objects.filter(title__icontains=movie_title)
+            movie_ids = movies.values_list('id', flat=True)
+
+            # Add to filters
+            filters &= Q(content_type=content_type_movie, object_id__in=movie_ids)
+
+        if rating:
+            # Filter by rating
+            filters &= Q(rating=rating)
+
+        # Fetch reviews based on the filters
+        reviews = Review.objects.filter(filters)
+
+        # Apply pagination
+        paginator = self.pagination_class()
+        paginated_reviews = paginator.paginate_queryset(reviews, request)
+
+        # Serialize the reviews
+        serializer = ReviewSerializer(paginated_reviews, many=True)
+
+        # Return paginated response
+        return paginator.get_paginated_response(serializer.data)
