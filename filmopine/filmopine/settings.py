@@ -152,11 +152,6 @@ REST_FRAMEWORK = {
     ),
 }
 
-SIMPLE_JWT = {
-    'AUTH_HEADER_TYPES': ('JWT',), # REMEMBER, when passing the token leave a space between the prefix and the key, i.e. JWT <token>
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=1)
-}
-
 # Specify serializers that Djsor uses to register users (specified in the core app)
 
 DJOSER = {
@@ -164,5 +159,12 @@ DJOSER = {
         'user_create': 'core.serializers.UserCreateSerializer',
         'current_user': 'core.serializers.UserSerializer'
     }
+}
+
+# Increate token lifetime from 5 minutes to 1 day (reset to 5 minutes in production/after presentation)
+
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('JWT',), # REMEMBER, when passing the token leave a space between the prefix and the key, i.e. JWT <token>
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1)
 }
 

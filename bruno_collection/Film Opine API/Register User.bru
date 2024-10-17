@@ -1,11 +1,21 @@
 meta {
   name: Register User
   type: http
-  seq: 4
+  seq: 3
 }
 
 post {
   url: http://127.0.0.1:8000/auth/users/
-  body: none
+  body: json
   auth: none
+}
+
+body:json {
+  {
+      "username": "user2",
+      "password": "ILoveDjango",
+      "email": "user2@domain.com",
+      "first_name": "Joel",
+      "last_name": "Smittie"
+  }
 }

@@ -5,12 +5,15 @@ from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from core.permissions import IsAdminOrReadOnly
 from .models import Movie
 from .serializers import MovieSerializer
 
 class MovieViewSet(viewsets.ModelViewSet):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
+    permission_classes = [IsAdminOrReadOnly] # custom permission
 
 class MovieSearchPagination(PageNumberPagination):
     page_size = 10  # Number of items per page

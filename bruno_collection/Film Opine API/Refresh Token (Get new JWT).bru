@@ -1,0 +1,17 @@
+meta {
+  name: Refresh Token (Get new JWT)
+  type: http
+  seq: 5
+}
+
+get {
+  url: http://127.0.0.1:8000/auth/jwt/refresh
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "refresh": "<paste_refresh_token>"
+  }
+}

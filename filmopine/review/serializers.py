@@ -5,7 +5,8 @@ from movie.models import Movie  # Import your Movie model
 
 class ReviewSerializer(serializers.ModelSerializer):
     movie_title = serializers.SerializerMethodField()
-
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    
     class Meta:
         model = Review
         fields = ['id', 'user', 'content_type', 'object_id', 'movie_title', 'review_title', 'review_content', 'rating', 'created_at', 'updated_at']
