@@ -6,6 +6,8 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from core.permissions import IsAdminOrReadOnly
 from .models import Movie
 from .serializers import MovieSerializer
@@ -24,7 +26,17 @@ class MovieSearchView(APIView):
     OMDB_API_KEY = config('OMDB_API_KEY')
     OMDB_BASE_URL = 'http://www.omdbapi.com/'
     paginator = MovieSearchPagination()
-
+    
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter('query', openapi.IN_QUERY, 
+                              description="Search term for movies", type=openapi.TYPE_STRING),
+        ],
+        responses={
+            200: "Paginated list of movies",
+            404: "Movie not found"
+        }
+    )
     def get(self, request):
         query = request.query_params.get('query')
 

@@ -7,10 +7,14 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.pagination import PageNumberPagination
 from django.contrib.contenttypes.models import ContentType
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 from .models import Review
 from .serializers import ReviewSerializer
 from movie.models import Movie
 from core.permissions import IsAdminOrOwner
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
@@ -65,9 +69,28 @@ class ReviewDetailAPIView(APIView):
     
 class ReviewSearchAPIView(APIView):
     pagination_class = GenericReviewPagination
-
+    
+    # Define query parameters using swagger_auto_schema
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                'movie_title', openapi.IN_QUERY,
+                description="Filter reviews by movie title",
+                type=openapi.TYPE_STRING
+            ),
+            openapi.Parameter(
+                'rating', openapi.IN_QUERY,
+                description="Filter reviews by rating (1.0 - 5.0)",
+                type=openapi.TYPE_NUMBER,
+                format='float'
+            ),
+        ],
+        responses={200: "Paginated list of reviews"}
+    )
     def get(self, request):
-        """Search for reviews by movie title or rating."""
+        """
+        Search for reviews by movie title or rating.
+        """
         movie_title = request.query_params.get('movie_title')
         rating = request.query_params.get('rating')
 
