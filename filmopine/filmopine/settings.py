@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 from decouple import config
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -146,4 +147,22 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,  # Set the max number of items per page to 10
     'COERCE_DECIMAL_TO_STRING': False, # Disable coercing Decimal fields to strings in API responses.
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication', # Specifies the default authentication the API should use
+    ),
 }
+
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('JWT',), # REMEMBER, when passing the token leave a space between the prefix and the key, i.e. JWT <token>
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1)
+}
+
+# Specify serializers that Djsor uses to register users (specified in the core app)
+
+DJOSER = {
+    'SERIALIZERS': {
+        'user_create': 'core.serializers.UserCreateSerializer',
+        'current_user': 'core.serializers.UserSerializer'
+    }
+}
+
