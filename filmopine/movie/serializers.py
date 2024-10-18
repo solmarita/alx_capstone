@@ -5,6 +5,24 @@ from .models import Movie
 from review.models import Review
 
 class MovieSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the Movie model in the Film Opine API.
+
+    This serializer provides the structure for movie data, including additional fields
+    for the number of reviews and the average rating. It is used to convert Movie
+    instances into JSON format and vice versa.
+
+    Attributes:
+        reviews_count (int): The number of reviews associated with the movie.
+        average_rating (float): The average rating of the movie based on reviews.
+
+    Meta:
+        model (Movie): The model associated with this serializer.
+        fields (list): A list of fields to be included in the serialized representation,
+            including 'id', 'imdb_id', 'title', 'year', 'film_type', 'poster',
+            'reviews_count', 'average_rating', 'created_at', and 'updated_at'.
+    """
+    
     reviews_count = serializers.SerializerMethodField()
     average_rating = serializers.SerializerMethodField()
 

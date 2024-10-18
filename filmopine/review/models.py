@@ -7,6 +7,21 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.core import validators
 
 class Review(models.Model):
+    """
+    Represents a review for a movie or other content.
+
+    Attributes:
+        id (UUIDField): Unique identifier for the review, automatically generated.
+        user (ForeignKey): Reference to the user who created the review.
+        content_type (ForeignKey): The type of content being reviewed, linked to the ContentType model.
+        object_id (PositiveBigIntegerField): The ID of the object being reviewed.
+        content_object (GenericForeignKey): Generic relation to the object being reviewed.
+        review_title (CharField): The title of the review.
+        review_content (TextField): The main content of the review.
+        rating (DecimalField): The rating given by the user, constrained to a range of 1.0 to 5.0.
+        created_at (DateTimeField): Timestamp for when the review was created.
+        updated_at (DateTimeField): Timestamp for when the review was last updated.
+    """
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
