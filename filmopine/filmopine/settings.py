@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', cast=bool) #cast=bool converts the output to boolean, i.e., True/False instead of "True"/"False"
+DEBUG = config('DEBUG', cast=bool) #cast=bool converts the output to boolean, i.e., True/False instead or "True"/"False"
 
 # ALLOWED_HOSTS = []
 ALLOWED_HOSTS = [config('APP_HOSTNAME', default='localhost'), '127.0.0.1']
@@ -94,27 +94,15 @@ WSGI_APPLICATION = 'filmopine.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        # 'ENGINE': 'django.db.backends.mysql', # make sure mysqlclient==2.0.0 is installed (specify 2.0.0 for pipfile.lock error to go away!)
-        # 'NAME': config('DB_NAME'),
-        # 'HOST': config('DB_HOST'),
-        # 'USER': config('DB_USER'),
-        # 'PASSWORD': config('DB_PASSWORD'),
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql', # make sure mysqlclient==2.0.0 is installed (specify 2.0.0 for pipfile.lock error to go away!)
+        'NAME': config('DB_NAME'),
+        'HOST': config('DB_HOST'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
     }
 }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': os.environ.get('DB_NAME'),
-#         'USER': os.environ.get('DB_USER'),
-#         'PASSWORD': os.environ.get('DB_PASSWORD'),
-#         'HOST': os.environ.get('DB_HOST'),
-#         'PORT': os.environ.get('DB_PORT'),
-#     }
-# }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
