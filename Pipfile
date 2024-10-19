@@ -15,6 +15,7 @@ djangorestframework-simplejwt = "*"
 python-decouple = "*"
 drf-yasg = "*"
 gunicorn = "*"
+whitenoise = "*"
 
 [dev-packages]
 
