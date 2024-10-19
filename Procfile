@@ -1,1 +1,1 @@
-web: gunicorn filmopine.wsgi
+web: gunicorn --pythonpath filmopine filmopine.wsgi

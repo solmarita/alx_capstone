@@ -9,8 +9,6 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
-import os
 from pathlib import Path
 from decouple import config
 from datetime import timedelta
@@ -28,7 +26,8 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool) #cast=bool converts the output to boolean, i.e., True/False instead of "True"/"False"
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [config('APP_HOSTNAME', default='localhost')]
 
 # Application definition
 
