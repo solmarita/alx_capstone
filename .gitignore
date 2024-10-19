@@ -3,3 +3,7 @@
 
 # Database files
 *.sqlite3
+
+# Static/Media files (we don't want them in our Github!)
+/media/
+/static/

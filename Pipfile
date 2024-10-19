@@ -14,6 +14,7 @@ djoser = "*"
 djangorestframework-simplejwt = "*"
 python-decouple = "*"
 drf-yasg = "*"
+gunicorn = "*"
 
 [dev-packages]
 
